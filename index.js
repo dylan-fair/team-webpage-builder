@@ -3,6 +3,8 @@ const Engineer = require('./lib/Engineer');
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
 const fs = require('fs');
+const Choice = require('inquirer/lib/objects/choice');
+const { get } = require('https');
 let engArr = [];
 let intArr = [];
 
@@ -31,11 +33,95 @@ function getInfo() {
             }
         ])
 }
-getInfo()
-    .then(info => {
-        const man = new Manager(info.manName, info.manId, info.manEmail, info.manOffNum);
-        generateMan(man)
-    })
+function getEmp() {
+    return inquirer
+        .prompt([
+            {
+                type: 'checkbox',
+                name: 'type',
+                message: 'Is this employee an intern or an Engineer',
+                choices: ['Intern', 'Engineer']
+            },
+            {
+                type: 'text',
+                name: 'name',
+                message: "What is the employee's name",
+            },
+            {
+                type: 'text',
+                name: 'id',
+                message: "What is the employee's id"
+            },
+            {
+                type: 'text',
+                name: 'email',
+                message: "What is the employee's email?"
+            }
+
+        ])
+        .then(data => {
+            if(data.type.join() === 'Intern'){
+                inquirer
+                    .prompt({
+                        type: 'text',
+                        name: 'school',
+                        message: "What school do they attend"
+                    })
+                    .then(info => {
+                        intArr.push(new Intern(data.name, data.id, data.email, info.school));
+                    })
+                    .then(() => {
+                        inquirer
+                            .prompt({
+                                type: 'confirm',
+                                name: 'addNew',
+                                message: 'Would you like to add another employee',
+                                default: false
+                            })
+                            .then(data => {
+                                if(data.addNew){
+                                    getEmp()
+                                } else {
+                                    return;
+                                }
+                            })
+                    })
+            } else {
+                inquirer
+                    .prompt({
+                        type: 'text',
+                        name: 'github',
+                        message: 'What is their github username?'
+                    })
+                    .then(info => {
+                        engArr.push(new Engineer(data.name, data.id, data.email, info.github));
+                    })
+                    .then(() => {
+                        inquirer
+                            .prompt({
+                                type: 'confirm',
+                                name: 'addNew',
+                                message: 'Would you like to add another employee',
+                                default: false
+                            })
+                            .then(data => {
+                                if(data.addNew){
+                                    getEmp()
+                                } else {
+                                    return;
+                                }
+                            })
+                    })
+            }
+        })
+}
+getEmp()
+    .then(console.log(engArr))
+//getInfo()
+//    .then(info => {
+//        const man = new Manager(info.manName, info.manId, info.manEmail, info.manOffNum);
+//        generateMan(man)
+//    })
 function generateMan(man) {
     return `
 <div class="team-member">
