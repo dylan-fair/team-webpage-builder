@@ -30,7 +30,7 @@ function generateEnginner(eng) {
                         <div class="info">
                             <p>ID: ${curEng.getId()}</p>
                             <p>Email: <a href="mailto: ${curEng.getEmail()}">${curEng.getEmail()}</a></p>
-                            <p>GitHub: <a href="github.com/${curEng.getGithub()}">${curEng.getGithub()}</a></p>
+                            <p>GitHub: <a href="https://www.github.com/${curEng.getGithub()}">${curEng.getGithub()}</a></p>
                         </div>
                     </div>
                     `
