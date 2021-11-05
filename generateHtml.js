@@ -1,4 +1,65 @@
-function generate () {
+function generateManager(man){
+   return `
+    <div class="team-member">
+        <div class="head">
+            <h3>${man.getName()}</h3>
+            <h4>${man.getRole()}</h4>
+        </div>
+        <div class="info">
+            <p>ID: ${man.getId()}</p>
+            <p>Email: <a href="mailto: ${man.getEmail()}">${man.getEmail()}</a></p>
+            <p>Office Number: ${man.getOfficeNum()}</p>
+        </div>
+    </div>
+
+    `
+}
+function generateEnginner(eng) {
+    if(!eng){
+        return
+    } else {
+        return `
+        <div class="team-member">
+            <div class="head">
+                <h3>${eng.getName()}</h3>
+                <h4>${eng.getRole()}</h4>
+            </div>
+            <div class="info">
+                <p>ID: ${eng.getId()}</p>
+                <p>Email: <a href="mailto: ${eng.getEmail()}">${eng.getEmail()}</a></p>
+                <p>GitHub: <a href="github.com/${eng.getGithub()}>${eng.getGithub()}</a></p>
+            </div>
+        </div>
+        
+        `
+    }
+}
+function generateInter(int){
+    if(!int){
+        return
+    } else {
+        return `
+        <div class="team-member">
+            <div class="head">
+                <h3>${int.getName()}</h3>
+                <h4>${int.getRole()}</h4>
+            </div>
+            <div class="info">
+                <p>ID: ${int.getId()}</p>
+                <p>Email: <a href="mailto: ${int.getEmail()}">${int.getEmail()}</a></p>
+                <p>School: ${int.getSchool()}</p>
+            </div>
+        </div>
+        `
+    }
+}
+
+
+
+
+
+
+function generate (man, eng, int) {
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -8,9 +69,6 @@ function generate () {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>Portfolio Demo</title>
-      <!-- CSS only -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-      <link href="https://fonts.googleapis.com/css?family=Public+Sans:300i,300,500&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="style.css">
     </head>
   
@@ -18,14 +76,13 @@ function generate () {
       <header>
         <h1>My Team</h1>
       </header>
-      <main class="container my-5">
-            ${generateEmployees(info)}
+      <main class="team">
+            ${generateManager(man)}
+            ${generateEnginner(eng)}
+            ${generateInter(int)}
       </main>
-      <footer class="container text-center py-3">
-        <h3 class="text-dark">&copy; ${new Date().getFullYear()} by ${header.name}</h3>
-      </footer>
     </body>
     </html>
     `;
-  };
-}
+};
+module.exports = generate;
