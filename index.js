@@ -63,7 +63,7 @@ function getEmp() {
         ])
         .then(data => {
             if(data.type.join() === 'Intern'){
-                inquirer
+                return inquirer
                     .prompt({
                         type: 'text',
                         name: 'school',
@@ -73,7 +73,7 @@ function getEmp() {
                         intArr.push(new Intern(data.name, data.id, data.email, info.school));
                     })
                     .then(() => {
-                        inquirer
+                        return inquirer
                             .prompt({
                                 type: 'confirm',
                                 name: 'addNew',
@@ -82,14 +82,14 @@ function getEmp() {
                             })
                             .then(data => {
                                 if(data.addNew){
-                                    getEmp()
+                                    return getEmp()
                                 } else {
                                     return;
                                 }
                             })
                     })
             } else {
-                inquirer
+                return inquirer
                     .prompt({
                         type: 'text',
                         name: 'github',
@@ -99,7 +99,7 @@ function getEmp() {
                         engArr.push(new Engineer(data.name, data.id, data.email, info.github));
                     })
                     .then(() => {
-                        inquirer
+                        return inquirer
                             .prompt({
                                 type: 'confirm',
                                 name: 'addNew',
@@ -108,7 +108,7 @@ function getEmp() {
                             })
                             .then(data => {
                                 if(data.addNew){
-                                    getEmp()
+                                    return getEmp()
                                 } else {
                                     return;
                                 }
@@ -117,10 +117,25 @@ function getEmp() {
             }
         })
 }
+const writeFile = fileContent => {
+    return new Promise((resolve, reject) => {
+      fs.writeFile('./dist/index.html', fileContent, err => {
+        if (err) {
+          reject(err);
+          return;
+        }
+  
+        resolve({
+          ok: true,
+          message: 'File created!'
+        });
+      });
+    });
+};
 getInfo()
     .then(data => {
         getEmp()
             .then(() => {
-                html(data, engArr, intArr);
+                writeFile(html(data, engArr, intArr));
             })
     })

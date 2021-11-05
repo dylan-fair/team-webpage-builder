@@ -15,41 +15,54 @@ function generateManager(man){
     `
 }
 function generateEnginner(eng) {
-    if(!eng){
+    if(eng.length === 0){
         return
     } else {
         return `
-        <div class="team-member">
-            <div class="head">
-                <h3>${eng.getName()}</h3>
-                <h4>${eng.getRole()}</h4>
-            </div>
-            <div class="info">
-                <p>ID: ${eng.getId()}</p>
-                <p>Email: <a href="mailto: ${eng.getEmail()}">${eng.getEmail()}</a></p>
-                <p>GitHub: <a href="github.com/${eng.getGithub()}>${eng.getGithub()}</a></p>
-            </div>
-        </div>
-        
+            ${eng
+                .map( curEng => {
+                    return `
+                    <div class="team-member">
+                        <div class="head">
+                            <h3>${curEng.getName()}</h3>
+                            <h4>${curEng.getRole()}</h4>
+                        </div>
+                        <div class="info">
+                            <p>ID: ${curEng.getId()}</p>
+                            <p>Email: <a href="mailto: ${curEng.getEmail()}">${curEng.getEmail()}</a></p>
+                            <p>GitHub: <a href="github.com/${curEng.getGithub()}">${curEng.getGithub()}</a></p>
+                        </div>
+                    </div>
+                    `
+                })
+                .join('')
+            }
         `
     }
 }
-function generateInter(int){
-    if(!int){
+function generateIntern(int){
+    if(int.length === 0){
         return
     } else {
         return `
-        <div class="team-member">
-            <div class="head">
-                <h3>${int.getName()}</h3>
-                <h4>${int.getRole()}</h4>
-            </div>
-            <div class="info">
-                <p>ID: ${int.getId()}</p>
-                <p>Email: <a href="mailto: ${int.getEmail()}">${int.getEmail()}</a></p>
-                <p>School: ${int.getSchool()}</p>
-            </div>
-        </div>
+            ${int
+                .map( curInt => {
+                    return `
+                    <div class="team-member">
+                        <div class="head">
+                            <h3>${curInt.getName()}</h3>
+                            <h4>${curInt.getRole()}</h4>
+                        </div>
+                        <div class="info">
+                            <p>ID: ${curInt.getId()}</p>
+                            <p>Email: <a href="mailto: ${curInt.getEmail()}">${curInt.getEmail()}</a></p>
+                            <p>School: ${curInt.getSchool()}</p>
+                        </div>
+                    </div>
+                    `
+                })
+                .join('')
+            }
         `
     }
 }
@@ -69,7 +82,7 @@ function generate (man, eng, int) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>Portfolio Demo</title>
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="styles.css">
     </head>
   
     <body>
@@ -79,7 +92,7 @@ function generate (man, eng, int) {
       <main class="team">
             ${generateManager(man)}
             ${generateEnginner(eng)}
-            ${generateInter(int)}
+            ${generateIntern(int)}
       </main>
     </body>
     </html>
