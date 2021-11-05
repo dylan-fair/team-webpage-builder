@@ -1,16 +1,16 @@
 function generateManager(man){
    return `
-    <div class="team-member">
-        <div class="head">
-            <h3>${man.getName()}</h3>
-            <h4>${man.getRole()}</h4>
+        <div class="team-member">
+            <div class="head">
+                <h3>${man.getName()}</h3>
+                <h4>${man.getRole()}</h4>
+            </div>
+            <div class="info">
+                <p>ID: ${man.getId()}</p>
+                <p>Email: <a href="mailto: ${man.getEmail()}">${man.getEmail()}</a></p>
+                <p>Office Number: ${man.getOfficeNum()}</p>
+            </div>
         </div>
-        <div class="info">
-            <p>ID: ${man.getId()}</p>
-            <p>Email: <a href="mailto: ${man.getEmail()}">${man.getEmail()}</a></p>
-            <p>Office Number: ${man.getOfficeNum()}</p>
-        </div>
-    </div>
 
     `
 }
